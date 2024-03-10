@@ -54,12 +54,20 @@ int main(int argc, char **argv) {
     return 0;
 }
 
+// ---- All functions that will be implemented for the project ----
+
+// Function to check on cases of characters
+
 void printPuzzle(char** arr) {
 	// This function will print out the complete puzzle grid (arr). 
-    // It must produce the output in the SAME format as the samples 
-    // in the instructions.
-    // Your implementation here...
 
+    for (int i = 0; i < bSize; i++) {
+        for (int j = 0; j < bSize; j++) {
+            printf("%c", *(*(arr+1) + j)); // Printing second row of 2D array and jth column 
+        }
+        printf("\n");
+    }
+    printf("\n");
 }
 
 void searchPuzzle(char** arr, char* word) {
@@ -67,6 +75,19 @@ void searchPuzzle(char** arr, char* word) {
     // word appears in arr, it will print out a message and the path 
     // as shown in the sample runs. If not found, it will print a 
     // different message as shown in the sample runs.
-    // Your implementation here...
+    
+    /*
+        1. Turn the word into uppercase
+        2. Figure out search algo
+        3. Traverse the grid
+        4. If a character of the word is found, figure out the position the 
+        character it is in with the word
+        5. At arr[i][j] with that character, input the word[i] position.
+        6. All other characters not in the word has their arr[i][j] = 0
+
+        * All characters in the word must be 1 index away from each other (row, column, both)
+        * All directions allowed in the search
+        
+    */
 
 }

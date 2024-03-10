@@ -71,10 +71,20 @@ void upperCase(char* word) {
 
 void printPuzzle(char** arr) {
 	// This function will print out the complete puzzle grid (arr). 
-
     for (int i = 0; i < bSize; i++) {
         for (int j = 0; j < bSize; j++) {
-            printf("%c", *(*(arr+1) + j)); // Printing second row of 2D array and jth column 
+            printf("%c ", *(*(arr+i) + j)); // Printing second row of 2D array and jth column 
+        }
+        printf("\n");
+    }
+    printf("\n");
+}
+
+void printtest(int** arr) {
+	// This function will print out the complete puzzle grid (arr). 
+    for (int i = 0; i < bSize; i++) {
+        for (int j = 0; j < bSize; j++) {
+            printf("%d ", *(*(arr+i) + j)); // Printing second row of 2D array and jth column 
         }
         printf("\n");
     }
@@ -114,20 +124,62 @@ void searchPuzzle(char** arr, char* word) {
    // 3. Else, arr[i][j] = 0
    
    for (i = 0; i < bSize; i++) {
-    for (j = 0; i < bSize; j++) {
-        char* currentChar = *(arr + i) + j; // Pointer for current character
-
-        if (*currentChar == *(word+0)) {
-            // logic
-        }
+    *(foundGrid + i) = (int*)malloc(bSize*sizeof(int));
+    for (j = 0; j < bSize; j++) {
+        *(*(foundGrid + i) + j) = 0;
     }
    }
 
+    for (int i = 0; i < bSize; i++) {
+        for (int j = 0; j < bSize; j++) {
+            // Check if the current character matches the first character of the word
+            if (arr[i][j] == word[0]) {
+                // Check if the word can be found starting from this position
+                // Check horizontally, vertically, and diagonally in all directions
+                for (int dir_i = -1; dir_i <= 1; dir_i++) {
+                    for (int dir_j = -1; dir_j <= 1; dir_j++) {
+                        if (dir_i == 0 && dir_j == 0) // Skip the case where both directions are 0
+                            continue;
+
+                        int k;
+                        // Check if the word matches starting from this position in the current direction
+                        for (k = 1; k < wordLength; k++) {
+                            int new_i = i + k * dir_i;
+                            int new_j = j + k * dir_j;
+                            // Check if the new position is within the puzzle boundaries
+                            if (new_i < 0 || new_i >= bSize || new_j < 0 || new_j >= bSize || arr[new_i][new_j] != word[k])
+                                break;
+                        }
+                        // If the entire word is found in this direction, mark the characters in the foundGrid
+                        if (k == wordLength) {
+                            for (k = 0; k < wordLength; k++) {
+                                foundGrid[i + k * dir_i][j + k * dir_j] = 1;
+                            }
+                            found = 1;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+//    for (i = 0; i < bSize; i++) {
+//     for (j = 0; j < bSize; j++) {
+//         char* current = *(arr+i)+j;
+//         for (int k = 0; k < wordLength; k++) {
+//             if (*current == *word) {
+//                 *(*(foundGrid + i) + j) = 1;
+//             }
+//         }
+//     }
+//    }
+
+   printtest(foundGrid);
+   
+
    if (found) {
     printf("Word found!\n");
-    // printPuzzle
    } else {
     printf("Word not found!\n");
    }
-
 }

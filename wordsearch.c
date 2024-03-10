@@ -105,6 +105,7 @@ void searchPuzzle(char** arr, char* word) {
    int i = 0, j = 0; // i = row, j = column
    int **foundGrid = (int**) malloc(bSize*sizeof(int*)); // The result 2D array 
    int wordLength = strlen(word);
+   int found = 0;
 
    // Traversing the grid
    // Check if a char in the grid is also in the word.
@@ -117,9 +118,16 @@ void searchPuzzle(char** arr, char* word) {
         char* currentChar = *(arr + i) + j; // Pointer for current character
 
         if (*currentChar == *(word+0)) {
-
+            // logic
         }
     }
+   }
+
+   if (found) {
+    printf("Word found!\n");
+    // printPuzzle
+   } else {
+    printf("Word not found!\n");
    }
 
 }

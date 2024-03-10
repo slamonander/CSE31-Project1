@@ -54,9 +54,20 @@ int main(int argc, char **argv) {
     return 0;
 }
 
+
+
 // ---- All functions that will be implemented for the project ----
 
 // Function to check on cases of characters
+
+void upperCase(char* word) {
+    while (*word != '\0') {
+        if (*word >= 'a' && *word <= 'z') {
+            *word = *word - ('a' - 'A'); // Turning lowercase char into upper by subtracting ASCII values, 32 constant value difference from lowercase to uppercase
+        }
+        word++;
+    }
+}
 
 void printPuzzle(char** arr) {
 	// This function will print out the complete puzzle grid (arr). 
@@ -89,5 +100,26 @@ void searchPuzzle(char** arr, char* word) {
         * All directions allowed in the search
         
     */
+
+   upperCase(word); // Turn word into uppercase
+   int i = 0, j = 0; // i = row, j = column
+   int **foundGrid = (int**) malloc(bSize*sizeof(int*)); // The result 2D array 
+   int wordLength = strlen(word);
+
+   // Traversing the grid
+   // Check if a char in the grid is also in the word.
+   // 1. If char at arr[i][j] matches char in word, arr[i][j] = word[matching char pos]
+   // 2. Check surrounding chars within 1 index
+   // 3. Else, arr[i][j] = 0
+   
+   for (i = 0; i < bSize; i++) {
+    for (j = 0; i < bSize; j++) {
+        char* currentChar = *(arr + i) + j; // Pointer for current character
+
+        if (*currentChar == *(word+0)) {
+
+        }
+    }
+   }
 
 }

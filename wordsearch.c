@@ -83,7 +83,7 @@ void printPuzzle(char** arr) {
 	// This function will print out the complete puzzle grid (arr). 
     for (int i = 0; i < bSize; i++) {
         for (int j = 0; j < bSize; j++) {
-            printf("%c ", *(*(arr+i) + j)); // Printing second row of 2D array and jth column 
+            printf("%c\t", *(*(arr+i) + j)); // Printing second row of 2D array and jth column 
         }
         printf("\n");
     }
@@ -117,7 +117,7 @@ int check_surrounding_indexes(char **arr, char *word, int index, int row, int co
                 if (*(*(arr + i) + j) == *(word + index)) { // See if the current character in arr matches the current character of word
                     if (check_surrounding_indexes(arr, word, index, i, j, wordLength)) { // If matches, recursively call back to the function and search for the next character
                         if (*(*(foundGrid + i) + j) > 0) { // Checks if the current element in the resulting array has been marked/found
-                            *(*(foundGrid + i) + j) = index; // Update the current element in the resulting array to the appropriate index
+                            *(*(foundGrid + i) + j) = *(*(foundGrid + i) + j) * 10 + (index + 1); // Update the current element in the resulting array to the appropriate index(es)
                         } else {
                             *(*(foundGrid + i) + j) = index + 1;
                         }
@@ -179,9 +179,9 @@ void searchPuzzle(char** arr, char* word) {
             if (*(*(arr + i) + j) == *(word + currentElement)) { // Checks if current character in the array matches the current character in the word
                 if (check_surrounding_indexes(arr, word, currentElement, i, j, wordLength)) { // Calls the recursive function to check surrounding indexes to see if the word does exist around the current character
                     if (*(*(foundGrid + i) + j) > 0) { // Checks to see if the current element in the resulting grid is marked
-                        *(*(foundGrid + i) + j) = (currentElement); // Update the current element in the grid to the appropriate index
+                        *(*(foundGrid + i) + j) = *(*(foundGrid + i) + j) * 10 + (currentElement + 1); // Update the current element of the resulting grid to the appropriate index(es)
                     } else {
-                        *(*(foundGrid + i) + j) = 1; // The first character of the word
+                        *(*(foundGrid + i) + j) = 1;
                     }
                     found = 1;
                 } 
@@ -192,7 +192,6 @@ void searchPuzzle(char** arr, char* word) {
 
     if (found == 1) {
         printf("Word found!\n");
-        printf("Printing the search path:\n");
         printSolution(foundGrid);
     } else {
         printf("Word not found!\n");
